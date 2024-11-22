@@ -1,8 +1,10 @@
-#include "ProgressBar.hpp"
+#include "../include/ProgressBar.hpp"
+
+const unsigned int START_INDEX = 2;
 
 /* Defining the constructor */
 ProgressBar::ProgressBar(char notDoneChar, char doneChar, unsigned int size)
-    : c(doneChar), ch(notDoneChar), size(size), todo(0), done(0)
+    : c(doneChar), ch(notDoneChar), size(size)
 {
   if(size <= 100)
   {
@@ -12,20 +14,30 @@ ProgressBar::ProgressBar(char notDoneChar, char doneChar, unsigned int size)
   {
     size = 100;
   }
+
+  setUpBar();
+}
+
+void ProgressBar::setUpBar()
+{
+  bar.clear();
+  bar.push_back(' ');
   bar.push_back('[');
-  for(int i = 1; i < size + 1; i++)
+  for(int i = START_INDEX; i < (size + START_INDEX); i++)
   {
     bar.push_back(ch);
   }
 
   bar.push_back(']');
+
+  pos = START_INDEX;
 }
 
-/* Defining fillUpCells */
-void ProgressBar::fillUpCells(unsigned int cells)
+/* Defining setPercentage */
+void ProgressBar::setPercentage(unsigned int percent)
 {
   pos = 0;
-  for(int i = 1; i < cells; i++)
+  for(int i = 1; i < percent; i++)
   {
     bar[i] = c;
     std::cout << '\r';
@@ -34,35 +46,11 @@ void ProgressBar::fillUpCells(unsigned int cells)
       std::cout << bar[j] << std::flush;
     }
   }
-  pos += cells;
+  pos += percent;
+
+  displayPercentage();
 }
 
-/* Defining fillUp */
-void ProgressBar::fillUp()
-{
-  if(pos < size)
-  {
-    bar[pos] = '>';
-  }
-  else
-  {
-    bar[pos] = c;
-  }
-
-  if(pos > 1)
-  {
-    bar[pos - 1] = c;
-  }
-
-  pos++;
-
-  std::cout << '\r';
-
-  for(int i = 0; i < bar.size(); i++)
-  {
-    std::cout << bar[i] << std::flush;
-  }
-}
 
 /* Displays the percentage beside the bar */
 void ProgressBar::displayPercentage()
@@ -71,20 +59,15 @@ void ProgressBar::displayPercentage()
   std::cout << (int)percent << "%";
 }
 
-/* Shows tasks done out of the tasks to be done */
-void ProgressBar::displayTasksDone()
-{
-  std::cout << '(' << done << '/' << todo << ')' << std::flush;
-}
-
 /* Returns the size of the progress bar */
-
 unsigned int ProgressBar::getSize()
 {
   return bar.size() - 2;
 }
 
-void ProgressBar::end()
+void ProgressBar::endAndReset()
 {
   std::cout << std::endl;
+  pos = 1;
+  setUpBar();
 }
