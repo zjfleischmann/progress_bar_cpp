@@ -5,21 +5,30 @@ unsigned int micros = 1000000; // microseconds to seconds
 
 int main()
 {
-	ProgressBar foo('.', '#', 30); 
+	ProgressBar foo('.', '=', 50);
 
 	foo.done = 0;
 	foo.todo = foo.getSize();
 
 	std::cout << "Doing a task" << std::endl;
 
-	for(int i = 0; i < foo.getSize(); i++)
+	for (int i = 0; i < foo.getSize(); i++)
 	{
- 		foo.done++;		
+		foo.done++;
 		usleep(0.1 * micros); // A delay of 0.1 second(s)
 		foo.fillUp();
 		foo.displayPercentage();
-		std::cout << " | ";
-		foo.displayTasksDone();	
+	}
+
+	// foo.fillUpCells(0);
+	foo.end();
+
+	for (int j = 0; j < foo.getSize(); j++)
+	{
+		foo.done++;
+		usleep(0.1 * micros); // A delay of 0.1 second(s)
+		foo.fillUp();
+		foo.displayPercentage();
 	}
 
 	foo.end();
