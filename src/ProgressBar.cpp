@@ -34,10 +34,24 @@ void ProgressBar::setUpBar()
 }
 
 /* Defining setPercentage */
-void ProgressBar::setPercentage(unsigned int percent)
+void ProgressBar::setPercentage(float pct)
 {
+  percent = pct;
+  float blocks_f = (pct / 100) * bar.size();
+  unsigned int blocks_i = (int)blocks_f;
+
+  //   std::cout<<percent<<std::endl;
+  //   std::cout<<blocks_i<<std::endl;
+
+  /* Catch 100% */
+  if(pct >= 100.0)
+  {
+    endAndReset();
+  }
+
   pos = 0;
-  for(int i = 1; i < percent; i++)
+
+  for(int i = 1; i < blocks_i; i++)
   {
     bar[i] = c;
     std::cout << '\r';
@@ -46,16 +60,14 @@ void ProgressBar::setPercentage(unsigned int percent)
       std::cout << bar[j] << std::flush;
     }
   }
-  pos += percent;
+  pos += blocks_i;
 
   displayPercentage();
 }
 
-
 /* Displays the percentage beside the bar */
 void ProgressBar::displayPercentage()
 {
-  float percent = ((float)pos / (float)(bar.size() - 1)) * 100;
   std::cout << (int)percent << "%";
 }
 
@@ -69,5 +81,6 @@ void ProgressBar::endAndReset()
 {
   std::cout << std::endl;
   pos = 1;
+  percent = 0;
   setUpBar();
 }
