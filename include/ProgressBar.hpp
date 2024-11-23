@@ -1,33 +1,27 @@
 #pragma once
 #include <iostream>
-#include <vector>
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 class ProgressBar
 {
-	public:
-		/* Takes in a char for filling up the bar and the size fo the bar */
-		ProgressBar(char notDoneChar, char doneChar, unsigned int size);
+public:
+  /* Takes in a char for filling up the bar and the width fo the bar */
+  ProgressBar(unsigned int totalWidth);
 
-		/* Resets the progress bar */
-		void endAndReset();
-		
-		/* Fills the bar upto a given number */
-		void setPercentage(float pct);
-		
-		/* Displays the percentage beside the bar */
-		void displayPercentage();
+  /* Fills the bar upto a given number */
+  void setPercentage(float pct);
 
-		/* Returns the size of the progress bar */
-		unsigned int getSize();
+  /* Resets the progress bar */
+  void endAndReset();
 
-	private:
-		unsigned int size = 0;
-		unsigned int pos = 1;
-		float percent;
-		char c;
-		char ch;
-		std::vector <char> bar;
-		void setUpBar();
+private:
+  unsigned int width = 0;
+  unsigned int currentProgressPosition = 1;
+  unsigned int progressBarBlocks;
+  float percent;
+  std::vector<char> bar;
+  void setUpBar();
+  void displayPercentage(); // Displays the percentage beside the bar
 };
