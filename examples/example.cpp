@@ -5,7 +5,7 @@ unsigned int micros = 1000000; // microseconds to seconds
 
 int main()
 {
-  ProgressBar foo(50);
+  ProgressBar foo(100);
 
   std::cout << "Doing a task" << std::endl;
 

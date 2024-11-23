@@ -1,7 +1,39 @@
+/********************************** Modine Manufacturing Company ***********************************
+ *                                                                                                  *
+ *                          ##########                                                              *
+ *                      ################                                                            *
+ *                   ###         ########                                                           *
+ *                 ##              ######                                                           *
+ *               #                  #####                                                           *
+ *             # MMMMMMM     MMMMMM     MMMMMMM     MMMMMMMMM      MMMM  MMMMMMM   MMMM  MMMMMMMMMM *
+ *           #   MMMMMMM    MMMMMMM  MMMMMMMMMMMM   MMMMMMMMMMMM   MMMM  MMMMMMM   MMMM MMMMMMMMMMM *
+ *               MMMMMMMM  MMM MMMM MMMMM    MMMMM MMMMM    MMMMM MMMMM MMMMMMMMM  MMM  MMMM        *
+ *              MMMM MMMM MMM MMMM MMMMM     MMMMM MMMMM    MMMMM MMMM  MMMM MMMM MMMM  MMMMMMMMM   *
+ *              MMMM MMMMMMM  MMMM MMMMM     MMMM  MMMM    MMMMM MMMMM  MMM  MMMMMMMMM MMMMM        *
+ *              MMM   MMMMM   MMMM  MMMMMMMMMMMM  MMMMMMMMMMMMM  MMMMM MMMM   MMMMMMM  MMMMMMMMMM   *
+ *             MMMM   MMMM   MMMM     MMMMMMM     MMMMMMMMMM     MMMM  MMMM   MMMMMMM  MMMMMMMMMM   *
+ * 888888                  8                                                                        *
+ * 888888               88                                                                          *
+ * 88888888         888                                                                             *
+ *  8888888888888888                                                                                *
+ *    8888888888                                                                                    *
+ *                                                                                                  *
+ * *************************************************************************************************/
+
+/********************************* Modine Confidentiality Notice: **********************************
+ * This document may contain confidential information, including information protected by the       *
+ * attorney/client privilege and/or attorney work product doctrine. Your handling of this           *
+ * information may be subject to a legal agreement, law or regulation restricting your rights as    *
+ * to use, duplication, and/or disclosure. Modine prohibits any unauthorized use, duplication, or   *
+ * disclosure of this document and any associated files. If you received this file in error,        *
+ * please advise the sender and permanently delete this document and any associated files.          *
+ ***************************************************************************************************/
+
 #include "../include/ProgressBar.hpp"
 
 #include <math.h>
 
+/* Constants */
 const unsigned int START_INDEX = 2;
 const unsigned int MAX_WIDTH = 200;
 const char notDoneChar = ' ';
@@ -57,16 +89,10 @@ void ProgressBar::setPercentage(float pct)
     blocks_i = progressBarBlocks;
   }
 
-  // std::cout<<"NEW"<<std::endl;
-  // std::cout<<percent<<std::endl;
-  // std::cout<<progressBarBlocks<<std::endl;
-  // std::cout<<blocks_f<<std::endl;
-  // std::cout<<blocks_i<<std::endl;
-
   /* Fill in bar */
   for(int i = 0; i < blocks_i; i++)
   {
-    if((i == (blocks_i - 1)) && (i < (progressBarBlocks-1)))
+    if((i == (blocks_i - 1)) && (i < (progressBarBlocks - 1)))
     {
       bar[START_INDEX + i] = '>';
     }
@@ -83,19 +109,14 @@ void ProgressBar::setPercentage(float pct)
     std::cout << bar[j] << std::flush;
   }
 
-  displayPercentage();
+  /* Display percentage label */
+  std::cout << (int)percent << "%";
 
   /* Catch 100% */
   if(pct >= 100.0)
   {
     endAndReset();
   }
-}
-
-/* Displays the percentage beside the bar */
-void ProgressBar::displayPercentage()
-{
-  std::cout << (int)percent << "%";
 }
 
 void ProgressBar::endAndReset()
